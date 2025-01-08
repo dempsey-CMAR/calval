@@ -11,8 +11,18 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
 Imports: 
+    data.table,
     dplyr,
     ggplot2,
     googlesheets4,
     lubridate,
-    stringr
+    qaqcmar (>= 1.0.8),
+    sensorstrings (>= 1.0.2),
+    stats,
+    stringr,
+    tidyr
+Remotes: 
+    https://github.com/dempsey-CMAR/qaqcmar,
+    https://github.com/dempsey-CMAR/sensorstrings
+URL: https://github.com/dempsey-CMAR/calval2
+BugReports: https://github.com/dempsey-CMAR/calval2/issues
