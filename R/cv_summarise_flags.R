@@ -10,9 +10,9 @@
 #' @return Returns a summary of observations that passed and failed for each
 #'   variable and sensor.
 #'
-#'  @importFrom dplyr group_by n ungroup summarise
-#'  @importFrom tidyr pivot_wider
-#'  @importFrom qaqcmar qc_assign_flag_labels
+#' @importFrom dplyr case_when group_by n ungroup summarise
+#' @importFrom tidyr pivot_wider
+#' @importFrom qaqcmar qc_assign_flag_labels
 #'
 #' @export
 
@@ -20,9 +20,9 @@
 cv_summarise_flags <- function(dat, wide = TRUE) {
 
   dat <- dat %>%
-    group_by(variable, sensor_serial_number, qc_flag) %>%
+    group_by(variable, sensor_type, sensor_serial_number, qc_flag) %>%
     summarise(n = n()) %>%
-    group_by(variable, sensor_serial_number) %>%
+    group_by(variable, sensor_type, sensor_serial_number) %>%
     mutate(n_percent = 100 * round(n / sum(n), digits = 2)) %>%
     ungroup() %>%
     select(-n) %>%
@@ -30,7 +30,11 @@ cv_summarise_flags <- function(dat, wide = TRUE) {
 
   if(isTRUE(wide)) {
    dat <- dat %>%
-     pivot_wider(names_from = qc_flag, values_from = n_percent)
+     pivot_wider(names_from = qc_flag, values_from = n_percent) %>%
+     mutate(
+       Pass = if_else(is.na(Pass), 0, Pass),
+       Fail = if_else(is.na(Fail), 0, Fail)
+     )
   }
 
   dat

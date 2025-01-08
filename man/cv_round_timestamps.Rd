@@ -4,17 +4,30 @@
 \alias{cv_round_timestamps}
 \title{Round timestamps to given intervals}
 \usage{
-cv_round_timestamps(dat, round_ints = NULL)
+cv_round_timestamps(
+  dat,
+  do_percent_sat_int = "10 minutes",
+  do_mg_l_int = "10 minutes",
+  sal_int = "10 minutes",
+  temp_int = "15 minutes"
+)
 }
 \arguments{
 \item{dat}{Data frame of compiled validation data in a long format.}
 
-\item{round_ints}{Data frame indicating what intervals to use when rounding
-the timestamps for each variable. Must have two columns: \code{variable},
-which has an entry for each variable in \code{dat}, and \code{round_ints},
-a character string of the corresponding interval, e.g., "10 minutes". The
-default interval is 10 minutes for dissolved oxygen and salinity, and 15
-minutes for temperature.}
+\item{do_percent_sat_int}{Character string indicating the time interval for
+binning the dissolved oxygen (percent saturation) timestamps. Default is
+\code{"10 mintues"}.}
+
+\item{do_mg_l_int}{Character string indicating the time interval for
+binning the dissolved oxygen (mg/L) timestamps. Default is \code{"10
+mintues"}.}
+
+\item{sal_int}{Character string indicating the time interval for binning the
+salinity timestamps. Default is \code{"10 mintues"}.}
+
+\item{temp_int}{Character string indicating the time interval for binning the
+temperature timestamps. Default is \code{"15 mintues"}.}
 }
 \value{
 Returns dat with an additional column \code{round_timestamp}.

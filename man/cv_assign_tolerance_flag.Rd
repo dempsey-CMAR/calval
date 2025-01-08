@@ -4,7 +4,7 @@
 \alias{cv_assign_tolerance_flag}
 \title{Assign a flag to each observation}
 \usage{
-cv_assign_tolerance_flag(dat, tolerance, vr2ar_tol = 0.5)
+cv_assign_tolerance_flag(dat, tolerance = NULL, vr2ar_tol = 0.5)
 }
 \arguments{
 \item{dat}{Data frame of compiled validation data with column

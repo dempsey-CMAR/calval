@@ -1,33 +1,34 @@
 #' Create metadata log from calval tracking sheet
 #'
+#' @param path File path to the Log folder.
+#'
 #' @param tracking calval tracking sheet, as downloaded from
 #'   \code{cv_read_calval_tracking()}.
 #'
-#' @return Returns data frame in the log format required for compiling data with
-#'   \code{sensorstrings}
+#' @return Exports csv file to /log folder in the log format required for
+#'   compiling data with \code{sensorstrings}.
 #'
-#' @author Nicole Torrie
-#'
-#' @importFrom dplyr %>% mutate rename
+#' @importFrom data.table fwrite
+#' @importFrom dplyr %>% distinct mutate rename
 #' @importFrom lubridate as_date as_datetime
 #'
 #' @export
 #'
 
-cv_create_val_log <- function(tracking) {
+cv_create_val_log <- function(path, tracking) {
 
-  trimtime <- tracking %>%
-    group_by(variable) %>%
-    summarise(
-      deployment_utc = min(deployment_utc), retrieval_utc = max(retrieval_utc)
-    )
+  val_id <- unique(tracking$validation_id)
 
- x <-  tracking %>%
-   distinct(sensor_serial_number, .keep_all = TRUE)
+  if(length(val_id) > 1) {
+    warning("More than 1 validation id found in tracking: ",
+      paste(val_id, collapse = " "))
+  }
 
+  tracking %>%
+    distinct(sensor_serial_number, .keep_all = TRUE) %>%
     mutate(
-      Logger_Latitude = NA,
-      Logger_Longitude = NA,
+      Logger_Latitude = 44.66,
+      Logger_Longitude = -63.56,
       Sensor_Depth = 999,
       Deployment_Waterbody = "bucket",
       `Lease#` = NA,
@@ -36,21 +37,26 @@ cv_create_val_log <- function(tracking) {
       Deployment = min(val_start_date),
       Retrieval = max(val_end_date),
     ) %>%
-
     select(
       validation_id,
       Deployment_Waterbody,
       Location_Description,
-      Deployment = val_start_date,
-      Retrieval = val_end_date,
+      `Lease#`,
+      Deployment,
+      Retrieval ,
       Logger_Latitude,
       Logger_Longitude,
       Logger_Model = sensor_model,
       `Serial#` = sensor_serial_number,
       Sensor_Depth,
       Configuration
+    ) %>%
+    fwrite(
+      file = paste0(path, "/", "Log", "/", val_id, "_log.csv"),
+      na = "NA",
+      showProgress = TRUE,
+      col.names = TRUE
     )
-
 }
 
 

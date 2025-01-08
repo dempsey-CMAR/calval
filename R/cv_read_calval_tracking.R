@@ -7,10 +7,12 @@
 #'
 #' @importFrom dplyr select
 #' @importFrom googlesheets4 gs4_deauth read_sheet
+#' @importFrom lubridate with_tz
 #' @importFrom stringr str_detect
 #'
 #'
-#' @return Returns a data frame of the calval tracking sheet.
+#' @return Returns a data frame of the calval tracking sheet. Deployment and
+#'   retrieval datetimes are appended in "Canada/Atlantic" and "UTC" timezones.
 #' @export
 
 
@@ -30,7 +32,7 @@ cv_read_calval_tracking <- function(link = NULL, sheet = NULL) {
 
   googlesheets4::gs4_deauth()
 
-  googlesheets4::read_sheet(
+  x <- googlesheets4::read_sheet(
     link,
     col_types = "cci-c-----ccDc--Dc--cnnnc----",
     na = c("", "NA", "N/A", "n/a")
@@ -55,5 +57,18 @@ cv_read_calval_tracking <- function(link = NULL, sheet = NULL) {
       calibration_attendant = `name of calibration attendant`,
       validation_attendant = `name of validation attendant`,
       notes = notes
+    ) %>%
+    mutate(
+      val_start_time = paste0(val_start_time, ":00"),
+      val_end_time = paste0(val_end_time, ":00"),
+
+      deployment_can = as_datetime(
+        paste(val_start_date, val_start_time), tz = "Canada/Atlantic"),
+
+      retrieval_can = as_datetime(
+        paste(val_end_date, val_end_time), tz = "Canada/Atlantic"),
+
+      deployment_utc = with_tz(deployment_can, tzone = "UTC"),
+      retrieval_utc = with_tz(retrieval_can, tzone = "UTC")
     )
 }

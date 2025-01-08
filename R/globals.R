@@ -22,6 +22,11 @@ utils::globalVariables(
     "validation end date",
     "validation end time (AST)",
 
+    "val_start_date",
+    "val_end_date",
+    "val_start_time",
+    "val_end_time",
+
     "validation variable",
     "validation status (CMAR USE)",
     "percent bad do readings",
@@ -29,7 +34,42 @@ utils::globalVariables(
     "percent bad sal readings",
 
     "name of calibration attendant",
-    "notes"
+    "name of validation attendant",
+    "notes",
+
+    # cv_create_val_log
+    "validation_id",
+    "Deployment_Waterbody",
+    "Location_Description",
+    "val_start_date",
+    "val_end_date",
+   "Logger_Latitude",
+    "Logger_Longitude",
+    "sensor_model",
+    "sensor_serial_number",
+    "Sensor_Depth",
+    "Configuration",
+
+   "Deployment",
+   "Retrieval",
+   "Lease#",
+   "deployment_can",
+   "deployment_utc",
+   "retrieval_can",
+   "retrieval_utc",
+   "Fail",
+   "Pass",
+   "med",
+   "n_percent",
+   "round_timestamp",
+   "sensor_type",
+   "timestamp_utc",
+   "tol_lower",
+   "tol_upper",
+   "tolerance",
+   "qc_flag",
+   "value",
+   "variable"
   ))
 
 

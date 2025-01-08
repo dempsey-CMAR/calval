@@ -26,16 +26,18 @@
 #' @export
 
 
-cv_assign_tolerance_flag <- function(dat, tolerance, vr2ar_tol = 0.5) {
+cv_assign_tolerance_flag <- function(dat, tolerance = NULL, vr2ar_tol = 0.5) {
 
-  tolerance <- data.frame(
-    variable = c(
-      "dissolved_oxygen_percent_saturation",
-      "dissolved_oxygen_uncorrected_mg_l",
-      "salinity_psu",
-      "temperature_degree_c"),
-    tolerance = c(5, 0.2, 1, 0.2)
-  )
+  if(is.null(tolerance)) {
+    tolerance <- data.frame(
+      variable = c(
+        "dissolved_oxygen_percent_saturation",
+        "dissolved_oxygen_uncorrected_mg_l",
+        "salinity_psu",
+        "temperature_degree_c"),
+      tolerance = c(5, 0.2, 1, 0.2)
+    )
+  }
 
   dat <- dat %>%
     left_join(tolerance, by = join_by(variable))
@@ -53,8 +55,8 @@ cv_assign_tolerance_flag <- function(dat, tolerance, vr2ar_tol = 0.5) {
       med = median(value),
       tol_lower = med - tolerance,
       tol_upper = med + tolerance,
-      qc_flag = if_else(value < tol_lower | value > tol_upper, 4, 1)
+      qc_flag = if_else(value < tol_lower | value > tol_upper, 4, 1),
+      qc_flag = ordered(qc_flag, levels = c(1, 4))
     ) %>%
     ungroup()
-
 }

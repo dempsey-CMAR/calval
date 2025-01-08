@@ -30,10 +30,7 @@ cv_trim_dat <- function(dat, trimtimes) {
       )
     ) %>%
     left_join(trimtimes, by = join_by(variable)) %>%
-    filter(
-      timestamp_utc >= deployment_utc,
-      timestamp_utc <= retrieval_utc
-    ) %>%
+    filter(timestamp_utc >= deployment_utc, timestamp_utc <= retrieval_utc) %>%
     mutate(
       variable = case_when(
         !is.na(units) ~ paste(variable, units, sep = "_"),

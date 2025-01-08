@@ -13,7 +13,8 @@ CMAR tracking sheet.}
 \item{sheet}{Character string with the name of the sheet to read in.}
 }
 \value{
-Returns a data frame of the calval tracking sheet.
+Returns a data frame of the calval tracking sheet. Deployment and
+  retrieval datetimes are appended in "Canada/Atlantic" and "UTC" timezones.
 }
 \description{
 Read in CMAR calval tracking sheet

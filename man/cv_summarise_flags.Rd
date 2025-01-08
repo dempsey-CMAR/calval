@@ -16,10 +16,6 @@ percentage values, or a long table including counts and percents.}
 \value{
 Returns a summary of observations that passed and failed for each
   variable and sensor.
-
- @importFrom dplyr group_by n ungroup summarise
- @importFrom tidyr pivot_wider
- @importFrom qaqcmar qc_assign_flag_labels
 }
 \description{
 Title
