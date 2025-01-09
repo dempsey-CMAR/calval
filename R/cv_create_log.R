@@ -15,12 +15,12 @@
 #' @export
 #'
 
-cv_create_val_log <- function(path, tracking) {
+cv_create_log <- function(path, tracking) {
 
   val_id <- unique(tracking$validation_id)
 
   if(length(val_id) > 1) {
-    warning("More than 1 validation id found in tracking: ",
+    stop("More than 1 validation id found in tracking: ",
       paste(val_id, collapse = " "))
   }
 
