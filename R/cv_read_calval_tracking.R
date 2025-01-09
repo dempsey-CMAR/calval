@@ -1,9 +1,17 @@
 #' Read in CMAR calval tracking sheet
 #'
+#' TODO: convert variable column to sensorstring vars & sensor model to proper
+#' models
+#'
+#' TODO: update sheet names
+#'
 #' @param link Link to the calval tracking sheet on Google Drive. Default is the
 #'   CMAR tracking sheet.
 #'
-#' @param sheet Character string with the name of the sheet to read in.
+#' @param sheet Character string with the name of the sheet to read in or an
+#'   abbreviation of the sheet name. \code{sheet = "pre"} will read in the sheet
+#'   "Pre Deployment CalVal". \code{sheet = "post"} will read in sheet "Post
+#'   Deployment Validation".
 #'
 #' @importFrom dplyr select
 #' @importFrom googlesheets4 gs4_deauth read_sheet
@@ -16,26 +24,24 @@
 #' @export
 
 
-cv_read_calval_tracking <- function(link = NULL, sheet = NULL) {
+cv_read_calval_tracking <- function(link = NULL, sheet = "pre") {
 
   if(is.null(link)) {
     link <- "https://docs.google.com/spreadsheets/d/1u1beyNL02NQvMblhkpGX9tazRqlhfZaJbzifvOKNP54/edit#gid=0"
   }
 
-  if(is.null(sheet)) {
-    sheet <- ifelse(
-      str_detect(val_id, "POST"),
-      "Post Deployment Validation",
-      "Pre Deployment CalVal"
-    )
-  }
+  sheet <- tolower(sheet)
+
+  if(str_detect(sheet, "pre")) sheet <- "Pre Deployment CalVal"
+  if(str_detect(sheet, "post")) sheet <- "Post Deployment Validation"
 
   googlesheets4::gs4_deauth()
 
-  x <- googlesheets4::read_sheet(
+  googlesheets4::read_sheet(
     link,
-    col_types = "cci-c-----ccDc--Dc--cnnnc----",
-    na = c("", "NA", "N/A", "n/a")
+    sheet = sheet,
+    col_types = "cci-c----ccDc--Dc--cnnnc----",
+    na = c("", "NA", "N/A", "n/a", "-")
   ) %>%
     dplyr::select(
       validation_id = `validation event id`,

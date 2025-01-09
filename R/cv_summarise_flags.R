@@ -1,5 +1,4 @@
-
-#' Title
+#' Validation results for each sensor and variable
 #'
 #' @param dat Data frame of compiled and flagged validation data, as returned
 #'   from \code{cv_assign_tolerance_flag()}.
@@ -7,17 +6,21 @@
 #' @param wide Logical argument indicating whether to return a wide table of
 #'   percentage values, or a long table including counts and percents.
 #'
+#' @param dt Logical argument indicating whether to open as an interactive
+#'   datatable.
+#'
 #' @return Returns a summary of observations that passed and failed for each
 #'   variable and sensor.
 #'
-#' @importFrom dplyr case_when group_by n ungroup summarise
+#' @importFrom DT datatable
+#' @importFrom dplyr arrange case_when desc group_by n ungroup summarise
 #' @importFrom tidyr pivot_wider
 #' @importFrom qaqcmar qc_assign_flag_labels
 #'
 #' @export
 
 
-cv_summarise_flags <- function(dat, wide = TRUE) {
+cv_summarise_flags <- function(dat, wide = TRUE, dt = FALSE) {
 
   dat <- dat %>%
     group_by(variable, sensor_type, sensor_serial_number, qc_flag) %>%
@@ -37,6 +40,21 @@ cv_summarise_flags <- function(dat, wide = TRUE) {
      )
   }
 
-  dat
+  dat <- dat %>%
+    arrange(desc(Fail))
+
+  if(isTRUE(dt)) {
+    datatable(
+      dat,
+      rownames = FALSE,
+      options = list(
+        dom = 'ft',
+        paging = FALSE,
+        searching = TRUE,
+        scrollY = "500px",
+        columnDefs = list(list(className = 'dt-center', targets = "_all"))
+      )
+    )
+  } else dat
 
 }

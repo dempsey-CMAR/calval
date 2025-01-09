@@ -1,6 +1,6 @@
 #' Create table of validation test start and end times for each variable
 #'
-#' @inheritParams cv_create_val_log
+#' @inheritParams cv_create_log
 #'
 #' @return Returns a data frame of the start and end times for each variable, in
 #'   UTC.

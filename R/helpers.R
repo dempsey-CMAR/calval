@@ -8,13 +8,16 @@
 #' @param val_id Character string of the validation id. Will be converted to
 #'   lower case, and all spaces will be replaced with an underscore.
 #'
+#' @param check_path Logical parameter indicating whether to check if the path
+#'   exists. Default is /code{TRUE}.
+#'
 #' @return The file path for importing raw calval data.
 #'
 #' @importFrom stringr str_replace_all
 #'
 #' @export
 
-cv_import_path <- function(val_id, path = NULL) {
+cv_import_path <- function(val_id, path = NULL, check_path = TRUE) {
   if (is.null(path)) {
     path <- "R:/data_branches/water_quality/validation/validation_data"
   }
@@ -24,7 +27,7 @@ cv_import_path <- function(val_id, path = NULL) {
 
   path <- paste(path, val_id, sep = "/")
 
-  if (isFALSE(dir.exists(path))) {
+  if (isTRUE(check_path) & isFALSE(dir.exists(path))) {
     stop("File path << ", path, " >> does not exist. Check val_id")
   }
 

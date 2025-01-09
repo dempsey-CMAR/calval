@@ -19,7 +19,7 @@
 #' @return Returns dat with an additional column \code{round_timestamp}.
 #'
 #' @importFrom dplyr case_when filter mutate
-#' @importFrom lubridate round_date
+#' @importFrom lubridate is.POSIXct round_date
 #'
 #' @export
 
@@ -31,27 +31,9 @@ cv_round_timestamps <- function(
     temp_int = "15 minutes"
 ) {
 
-  # if(is.null(round_ints)) {
-  #   round_ints <- data.frame(
-  #     variable = c(
-  #       "dissolved_oxygen_percent_saturation",
-  #       "dissolved_oxygen_uncorrected_mg_l",
-  #       "salinity_psu",
-  #       "temperature_degree_c"),
-  #     round_ints = c("10 minutes", "10 minutes", "10 minutes", "15 minutes")
-  #   )
-  # }
-  #
-  # do_percent_sat_int <- filter(
-  #   round_ints, variable == "dissolved_oxygen_percent_saturation")$round_ints
-  #
-  # do_mg_l_int <- filter(
-  #   round_ints, variable == "dissolved_oxygen_uncorrected_mg_l")$round_ints
-  #
-  # sal_int <- filter(round_ints, variable == "salinity_psu")$round_ints
-  #
-  # temp_int <- filter(round_ints, variable == "temperature_degree_c")$round_ints
-
+  if(!is.POSIXct(dat$timestamp_utc)) {
+    stop("timestamp_utc must be class POSIXct")
+  }
 
   dat %>%
     mutate(

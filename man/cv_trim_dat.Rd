@@ -17,5 +17,5 @@ Returns dat in a long format, trimmed to the start and end of the
   test for each variable.
 }
 \description{
-Trim compiled data to the start and end of each test
+TODO: tests for this function
 }

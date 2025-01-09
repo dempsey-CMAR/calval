@@ -4,13 +4,16 @@
 \alias{cv_import_path}
 \title{Generate file path to import raw calval data}
 \usage{
-cv_import_path(val_id, path = NULL)
+cv_import_path(val_id, path = NULL, check_path = TRUE)
 }
 \arguments{
 \item{val_id}{Character string of the validation id. Will be converted to
 lower case, and all spaces will be replaced with an underscore.}
 
 \item{path}{File path to the validation_data folder on the CMAR R drive.}
+
+\item{check_path}{Logical parameter indicating whether to check if the path
+exists. Default is /code{TRUE}.}
 }
 \value{
 The file path for importing raw calval data.

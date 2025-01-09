@@ -1,5 +1,7 @@
 #' Trim compiled data to the start and end of each test
 #'
+#' TODO: tests for this function
+#'
 #' @param dat Data frame of compiled validation data in wide format.
 #'
 #' @param trimtimes Data frame with the start and end timestamps for each
