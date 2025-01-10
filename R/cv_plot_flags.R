@@ -123,7 +123,7 @@ cv_ggplot_flags <- function(
   if(nrow(filter(dat, !str_detect(sensor_type, "vr2ar"))) > 0) {
     var_ribbon <- geom_ribbon(
       data = filter(dat, !str_detect(sensor_type, "vr2ar")),
-      aes(ymin = med - tolerance, ymax = med + tolerance),
+      aes(ymin = tol_lower, ymax = tol_upper),
       alpha = 0.3, col = "grey20", fill = "grey75"
     )
   } else var_ribbon <- NULL
@@ -135,7 +135,7 @@ cv_ggplot_flags <- function(
 
     vr2_ribbon <- geom_ribbon(
       data = temp_vr,
-      aes(ymin = med - tolerance, ymax = med + tolerance),
+      aes(ymin = tol_lower, ymax = tol_upper),
       alpha = 0.3, col = "grey20", fill = "grey87"
     )
   } else vr2_ribbon <- NULL
@@ -149,8 +149,6 @@ cv_ggplot_flags <- function(
     scale_x_datetime("Date") +
     scale_colour_manual(colour_col, values = pal, drop = FALSE) +
     theme_light()
-
-
 
   if(isFALSE(plotly_friendly)) {
     p <- p + guides(color = guide_legend(override.aes = list(size = 4)))
