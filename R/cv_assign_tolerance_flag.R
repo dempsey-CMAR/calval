@@ -3,6 +3,9 @@
 #' The tolerance flag is based on the median value of the time interval
 #' plus/minus to tolerance (accuracy) for each variable.
 #'
+#' TODO: Add option to overwrite tol_min and tol_max with threshold values,
+#' e.g., for dissolved oxygen.
+#'
 #' @param dat Data frame of compiled validation data with column
 #'   \code{round_timestamp}, as returned from \code{cv_round_timestamps()}.
 #'

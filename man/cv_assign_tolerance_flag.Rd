@@ -29,3 +29,7 @@ Returns dat with several additional columns: tolerance, med,
 The tolerance flag is based on the median value of the time interval
 plus/minus to tolerance (accuracy) for each variable.
 }
+\details{
+TODO: Add option to overwrite tol_min and tol_max with threshold values,
+e.g., for dissolved oxygen.
+}
