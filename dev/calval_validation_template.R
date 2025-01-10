@@ -15,16 +15,16 @@ library(sensorstrings)
 
 # SECTION 1: **Generate File Path** -------------------------------------------------------------
 
-val_id <- "POST0016"
+val_id <- "VAL0055"
 
 # Set the path to the folder with validation data
 path <- cv_import_path(val_id)
 
 # SECTION 2: Read in metadata and generate log -----------------------------------------------------------------
 
-sheet = ifelse(grepl("pre", val_id), "pre", "post")
-
-calval_tracking <- cv_read_calval_tracking(sheet = sheet) %>%
+calval_tracking <- cv_read_calval_tracking(
+  sheet = ifelse(grepl("VAL", val_id) | grepl("val", val_id) , "pre", "post")
+) %>%
   filter(validation_id == val_id)
 
 # create log from metadata
@@ -32,6 +32,7 @@ cv_create_log(path, calval_tracking)
 
 # SECTION 3: Compile & View -----------------------------------------------------------------
 
+# TODO: export this data?
 dat_raw <- ss_compile_deployment_data(path, use_config = FALSE) %>%
   select(-c(county, waterbody, station, lease, latitude, longitude,
             string_configuration))
@@ -43,6 +44,11 @@ ss_ggplot_variables(dat_raw)
 # could move this in with the trim function
 # leaving here now so that it is easy to review and modify
 trimtimes <- cv_val_trimtimes(calval_tracking)
+
+# # to adjust trim times
+# trimtimes[
+#   which(trimtimes$variable == "temperature_degree_c"), 2] <-
+#   as_datetime("2024-08-28 21:00:00")
 
 dat <- cv_trim_dat(dat_raw, trimtimes)
 
