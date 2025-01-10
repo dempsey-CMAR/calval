@@ -5,7 +5,7 @@
 #' @return Returns a data frame of the start and end times for each variable, in
 #'   UTC.
 #'
-#' @importFrom dplyr case_when group_by summarise mutate
+#' @importFrom dplyr case_when group_by mutate summarise ungroup
 
 
 cv_val_trimtimes <- function(tracking) {
@@ -23,5 +23,6 @@ cv_val_trimtimes <- function(tracking) {
         variable == "Temp" ~ "temperature_degree_c",
         TRUE ~ NA_character_
       )
-    )
+    ) %>%
+    ungroup()
 }
