@@ -6,6 +6,7 @@
 #'   UTC.
 #'
 #' @importFrom dplyr case_when group_by mutate summarise ungroup
+#' @export
 
 
 cv_val_trimtimes <- function(tracking) {
