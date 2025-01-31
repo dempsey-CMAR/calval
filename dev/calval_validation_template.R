@@ -78,4 +78,35 @@ ggplotly(p$dissolved_oxygen_percent_saturation)
 ggplotly(p$temperature_degree_c)
 
 
+# export results ----------------------------------------------------------
+
+write_csv(dat, paste0(path, "/", val_id, ".csv"))
+
+cv_summarise_flags(dat, dt = FALSE) %>%
+  write_csv(file = paste0(path, "/", val_id, "_summary.csv"))
+
+
+imap(
+  p,
+  ~ggsave(
+    plot = .x, filename = paste0(path, "/", .y, ".png"),
+    device = "png", width = 20, height = 10, units = "cm", dpi = 600
+  ))
+
+
+
+# export interactive plots ------------------------------------------------
+
+library(htmlwidgets)
+
+saveWidget(
+  ggplotly(p$temperature_degree_c),
+  file = paste0(path, "/temperature_degree_c.html")
+)
+
+
+saveWidget(
+  ggplotly(p$dissolved_oxygen_percent_saturation),
+  file = paste0(path, "/dissolved_oxygen_percent_saturation.html")
+)
 
