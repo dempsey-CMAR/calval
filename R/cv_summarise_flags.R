@@ -35,13 +35,14 @@ cv_summarise_flags <- function(dat, wide = TRUE, dt = FALSE) {
    dat <- dat %>%
      pivot_wider(names_from = qc_flag, values_from = n_percent) %>%
      mutate(
-       Pass = if_else(is.na(Pass), 0, Pass),
-       Fail = if_else(is.na(Fail), 0, Fail)
-     )
+       percent_pass = if_else(is.na(Pass), 0, Pass),
+       percent_fail = if_else(is.na(Fail), 0, Fail)
+     ) %>%
+     select(-c(Pass, Fail))
   }
 
-  dat <- dat %>%
-    arrange(desc(Fail))
+  # dat <- dat %>%
+  #   arrange(desc(Fail))
 
   if(isTRUE(dt)) {
     datatable(
