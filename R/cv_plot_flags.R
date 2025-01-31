@@ -93,6 +93,8 @@ cv_plot_flags <- function(
 #'
 #' @param pal Colour palette assigned to the observations.
 #'
+#' @param plot_title Optional character string to add as the plot title.
+#'
 #' @inheritParams cv_plot_flags
 #'
 #' @return Returns a ggplot object; a figure of validation results coloured by
@@ -100,7 +102,8 @@ cv_plot_flags <- function(
 #'
 #' @importFrom dplyr filter
 #' @importFrom ggplot2 aes geom_point geom_ribbon ggplot guides guide_legend
-#'   scale_colour_manual scale_x_datetime scale_y_continuous theme_light theme
+#'   labs scale_colour_manual scale_x_datetime scale_y_continuous theme_light
+#'   theme
 #' @importFrom rlang sym
 #'
 
@@ -109,12 +112,15 @@ cv_ggplot_flags <- function(
     var,
     colour_col = "qc_flag",
     pal = NULL,
+    plot_title = NA,
     plotly_friendly = FALSE
 ) {
 
-  if(var == "dissolved_oxygen_percent_saturation") {
-    y_limits <- c(80, 110)
-  } else y_limits <- NULL
+  # if(var == "dissolved_oxygen_percent_saturation") {
+  #   y_limits <- c(80, 120)
+  # } else y_limits <- NULL
+
+  y_limits <- NULL
 
 
   sensors <- unique(dat$sensor_type)
@@ -149,6 +155,8 @@ cv_ggplot_flags <- function(
     scale_x_datetime("Date") +
     scale_colour_manual(colour_col, values = pal, drop = FALSE) +
     theme_light()
+
+  if(!is.na(plot_title)) p <- p + labs(title = plot_title)
 
   if(isFALSE(plotly_friendly)) {
     p <- p + guides(color = guide_legend(override.aes = list(size = 4)))

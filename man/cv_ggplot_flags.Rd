@@ -9,6 +9,7 @@ cv_ggplot_flags(
   var,
   colour_col = "qc_flag",
   pal = NULL,
+  plot_title = NA,
   plotly_friendly = FALSE
 )
 }
@@ -22,6 +23,8 @@ a column named with the string "qc_flag".}
 observations.}
 
 \item{pal}{Colour palette assigned to the observations.}
+
+\item{plot_title}{Optional character string to add as the plot title.}
 
 \item{plotly_friendly}{Logical argument. If \code{TRUE}, the legend will be
 plotted when \code{plotly::ggplotly} is called on \code{p}. Default is
