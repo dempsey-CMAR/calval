@@ -9,7 +9,9 @@ cv_plot_flags(
   vars = "all",
   colour_col = "qc_flag",
   pal = NULL,
-  plotly_friendly = FALSE
+  plot_title = NA,
+  plotly_friendly = FALSE,
+  point_size = 1
 )
 }
 \arguments{
@@ -25,9 +27,14 @@ observations.}
 Default is c("chartreuse4", "#DB4325") when \code{colour_col = "qc_flag"},
 and Dark2 from RColourBrewer otherwise.}
 
+\item{plot_title}{Optional character string to add as the plot title.}
+
 \item{plotly_friendly}{Logical argument. If \code{TRUE}, the legend will be
 plotted when \code{plotly::ggplotly} is called on \code{p}. Default is
 \code{FALSE}, which makes the legend look better in a static figure.}
+
+\item{point_size}{Size of the points in the plot. Passed to
+\code{geom_point()}.}
 }
 \value{
 Returns a list of ggplot objects; one figure for each variable in

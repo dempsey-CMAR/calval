@@ -32,13 +32,18 @@ cv_summarise_flags <- function(dat, wide = TRUE, dt = FALSE) {
     qc_assign_flag_labels()
 
   if(isTRUE(wide)) {
-   dat <- dat %>%
-     pivot_wider(names_from = qc_flag, values_from = n_percent) %>%
-     mutate(
-       percent_pass = if_else(is.na(Pass), 0, Pass),
-       percent_fail = if_else(is.na(Fail), 0, Fail)
-     ) %>%
-     select(-c(Pass, Fail))
+    dat <- dat %>%
+      pivot_wider(names_from = qc_flag, values_from = n_percent) #%>%
+
+    if(!("Fail" %in% colnames(dat))) dat <- dat %>% mutate(Fail = NA)
+    if(!("Pass" %in% colnames(dat))) dat <- dat %>% mutate(Pass = NA)
+
+    dat <- dat %>%
+      mutate(
+        percent_pass = if_else(is.na(Pass), 0, Pass),
+        percent_fail = if_else(is.na(Fail), 0, Fail)
+      ) %>%
+      select(-c(Pass, Fail))
   }
 
   # dat <- dat %>%

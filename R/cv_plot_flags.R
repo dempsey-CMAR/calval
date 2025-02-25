@@ -12,9 +12,14 @@
 #'   Default is c("chartreuse4", "#DB4325") when \code{colour_col = "qc_flag"},
 #'   and Dark2 from RColourBrewer otherwise.
 #'
+#' @param plot_title Optional character string to add as the plot title.
+#'
 #' @param plotly_friendly Logical argument. If \code{TRUE}, the legend will be
 #'   plotted when \code{plotly::ggplotly} is called on \code{p}. Default is
 #'   \code{FALSE}, which makes the legend look better in a static figure.
+#'
+#' @param point_size Size of the points in the plot. Passed to
+#'   \code{geom_point()}.
 #'
 #' @return Returns a list of ggplot objects; one figure for each variable in
 #'   \code{vars}.
@@ -31,7 +36,10 @@ cv_plot_flags <- function(
     vars = "all",
     colour_col = "qc_flag",
     pal = NULL,
-    plotly_friendly = FALSE) {
+    plot_title = NA,
+    plotly_friendly = FALSE,
+    point_size = 1
+    ) {
 
   p <- list()
 
@@ -76,6 +84,7 @@ cv_plot_flags <- function(
       colour_col = colour_col,
       var = var_i,
       pal = pal,
+      plot_title = plot_title,
       plotly_friendly = plotly_friendly
     )
   }
@@ -92,8 +101,6 @@ cv_plot_flags <- function(
 #' @param var Caharacter string of the variable to plot.
 #'
 #' @param pal Colour palette assigned to the observations.
-#'
-#' @param plot_title Optional character string to add as the plot title.
 #'
 #' @inheritParams cv_plot_flags
 #'
@@ -113,7 +120,8 @@ cv_ggplot_flags <- function(
     colour_col = "qc_flag",
     pal = NULL,
     plot_title = NA,
-    plotly_friendly = FALSE
+    plotly_friendly = FALSE,
+    point_size = 1
 ) {
 
   # if(var == "dissolved_oxygen_percent_saturation") {
@@ -150,9 +158,8 @@ cv_ggplot_flags <- function(
     ggplot(aes(round_timestamp, value, colour = !!sym(colour_col))) +
     var_ribbon +
     vr2_ribbon +
-    geom_point(show.legend = TRUE) +
+    geom_point(size = point_size, show.legend = TRUE) +
     scale_y_continuous(var, limits = y_limits) +
-    scale_x_datetime("Date") +
     scale_colour_manual(colour_col, values = pal, drop = FALSE) +
     theme_light()
 

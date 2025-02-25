@@ -10,7 +10,8 @@ cv_ggplot_flags(
   colour_col = "qc_flag",
   pal = NULL,
   plot_title = NA,
-  plotly_friendly = FALSE
+  plotly_friendly = FALSE,
+  point_size = 1
 )
 }
 \arguments{
@@ -29,6 +30,9 @@ observations.}
 \item{plotly_friendly}{Logical argument. If \code{TRUE}, the legend will be
 plotted when \code{plotly::ggplotly} is called on \code{p}. Default is
 \code{FALSE}, which makes the legend look better in a static figure.}
+
+\item{point_size}{Size of the points in the plot. Passed to
+\code{geom_point()}.}
 }
 \value{
 Returns a ggplot object; a figure of validation results coloured by
