@@ -1,6 +1,6 @@
 Package: calval
 Title: Validate Calibrated Sensor Performance
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: 
     c(person(given = "Danielle", 
     family = "Dempsey", 

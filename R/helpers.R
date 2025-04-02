@@ -9,7 +9,7 @@
 #'   lower case, and all spaces will be replaced with an underscore.
 #'
 #' @param check_path Logical parameter indicating whether to check if the path
-#'   exists. Default is /code{TRUE}.
+#'   exists. Default is \code{TRUE}.
 #'
 #' @return The file path for importing raw calval data.
 #'

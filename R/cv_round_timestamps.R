@@ -41,7 +41,7 @@ cv_round_timestamps <- function(
         variable == "dissolved_oxygen_percent_saturation" ~
           round_date(timestamp_utc, do_percent_sat_int),
 
-        variable == "dissolved_oxygen_uncorrected_mg_l" ~
+        variable == "dissolved_oxygen_uncorrected_mg_per_l" ~
           round_date(timestamp_utc, do_mg_l_int),
 
         variable == "salinity_psu" ~ round_date(timestamp_utc, sal_int),

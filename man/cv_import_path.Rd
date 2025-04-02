@@ -13,7 +13,7 @@ lower case, and all spaces will be replaced with an underscore.}
 \item{path}{File path to the validation_data folder on the CMAR R drive.}
 
 \item{check_path}{Logical parameter indicating whether to check if the path
-exists. Default is /code{TRUE}.}
+exists. Default is \code{TRUE}.}
 }
 \value{
 The file path for importing raw calval data.
