@@ -26,7 +26,7 @@
 cv_round_timestamps <- function(
     dat,
     do_percent_sat_int = "10 minutes",
-    do_mg_l_int = "10 minutes",
+    do_mg_l_int = "15 minutes",
     sal_int = "10 minutes",
     temp_int = "15 minutes"
 ) {
