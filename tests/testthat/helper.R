@@ -1,6 +1,6 @@
 library(lubridate)
 
-path <- system.file("testdata", package = "calval2")
+path <- system.file("testdata", package = "calval")
 
 calval_tracking <- cv_read_calval_tracking()
 
@@ -41,7 +41,7 @@ df_round <- data.frame(
 # cv_assign_tolerance_flag ------------------------------------------------
 
 dat <- readRDS(
-  paste(system.file("testdata", package = "calval2"),
+  paste(system.file("testdata", package = "calval"),
         "test_data_tolerance.RDS", sep = "/")
   )
 

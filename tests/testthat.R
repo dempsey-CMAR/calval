@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
 library(testthat)
-library(calval2)
+library(calval)
 
-test_check("calval2")
+test_check("calval")
