@@ -4,17 +4,20 @@
 #'
 #' @param do_percent_sat_int Character string indicating the time interval for
 #'   binning the dissolved oxygen (percent saturation) timestamps. Default is
-#'   \code{"10 mintues"}.
+#'   \code{"10 minutes"}.
 #'
 #' @param do_mg_l_int Character string indicating the time interval for
 #'   binning the dissolved oxygen (mg/L) timestamps. Default is \code{"10
-#'   mintues"}.
+#'   minutes"}.
+#'
+#' @param ph_int Character string indicating the time interval for binning the
+#'   pH timestamps. Default is \code{"15 minutes"}.
 #'
 #' @param sal_int Character string indicating the time interval for binning the
 #'   salinity timestamps. Default is \code{"10 mintues"}.
 #'
 #' @param temp_int Character string indicating the time interval for binning the
-#'   temperature timestamps. Default is \code{"15 mintues"}.
+#'   temperature timestamps. Default is \code{"15 minutes"}.
 #'
 #' @return Returns dat with an additional column \code{round_timestamp}.
 #'
@@ -27,6 +30,7 @@ cv_round_timestamps <- function(
     dat,
     do_percent_sat_int = "10 minutes",
     do_mg_l_int = "15 minutes",
+    ph_int = "10 minutes",
     sal_int = "10 minutes",
     temp_int = "15 minutes"
 ) {
@@ -43,6 +47,9 @@ cv_round_timestamps <- function(
 
         variable == "dissolved_oxygen_uncorrected_mg_per_l" ~
           round_date(timestamp_utc, do_mg_l_int),
+
+        variable == "ph_ph" ~
+          round_date(timestamp_utc, ph_int),
 
         variable == "salinity_psu" ~ round_date(timestamp_utc, sal_int),
 

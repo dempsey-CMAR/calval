@@ -36,9 +36,10 @@ cv_assign_tolerance_flag <- function(dat, tolerance = NULL, vr2ar_tol = 0.5) {
       variable = c(
         "dissolved_oxygen_percent_saturation",
         "dissolved_oxygen_uncorrected_mg_per_l",
+        "ph_ph",
         "salinity_psu",
         "temperature_degree_c"),
-      tolerance = c(5, 0.2, 1, 0.2)
+      tolerance = c(5, 0.2, 0.1, 1, 0.2)
     )
   }
 
